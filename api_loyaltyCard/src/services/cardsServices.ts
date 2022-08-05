@@ -34,24 +34,33 @@ async function findAll(id: number) {
 }
 
 async function addPointsCard(code: string, promotionId: number) {
+
     let points = 0;
     let newCard = {};
+    let clientId = null;
 
     const user = await userServices.findByCode(code);
+    
     const { businessId } = await promotionsServices.findById(promotionId);
     const client = await clientsServices.findByUserIdAndBusinessId(user.id, businessId);
+    clientId = client?.id;
+    
+    
+    if(!client) {
+        await clientsServices.insert({userId: user.id, businessId});
+        const {id} = await clientsServices.findByUserIdAndBusinessId(user.id, businessId);
+        clientId = id;
+    }
 
-    if(!client) await clientsServices.insert({userId: user.id, businessId});
-
-    const card = await findByClientId(client.id, promotionId);
+    const card = await findByClientId(clientId, promotionId);
 
     if(!card){
-        await insert({clientId: client.id, points: 1, promotionId});
-        newCard = await findByClientId(client.id, promotionId);
+        await insert({clientId, points: 1, promotionId});
+        newCard = await findByClientId(clientId, promotionId);
     }else {
 
         points = card.points + 1;
-        await update({id: card.id, points, promotionId, clientId: client.id});
+        await update({id: card.id, points, promotionId, clientId});
     }
 
     return card? {...card, points}: newCard;
