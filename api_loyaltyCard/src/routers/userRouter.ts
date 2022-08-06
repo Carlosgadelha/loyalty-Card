@@ -8,4 +8,5 @@ const userRouter = Router();
 userRouter.post("/signup", validateSchemaMiddleware(userSchema), createUser )
 userRouter.post("/signin", validateSchemaMiddleware(loginSchema),login )
 
-export default userRouter;
+export default userRouter
+;

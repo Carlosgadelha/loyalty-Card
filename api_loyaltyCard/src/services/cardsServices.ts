@@ -45,7 +45,6 @@ async function addPointsCard(code: string, promotionId: number) {
     const client = await clientsServices.findByUserIdAndBusinessId(user.id, businessId);
     clientId = client?.id;
     
-    
     if(!client) {
         await clientsServices.insert({userId: user.id, businessId});
         const {id} = await clientsServices.findByUserIdAndBusinessId(user.id, businessId);
@@ -65,7 +64,6 @@ async function addPointsCard(code: string, promotionId: number) {
 
     return card? {...card, points}: newCard;
 }
-
 
 export default {
     findById,

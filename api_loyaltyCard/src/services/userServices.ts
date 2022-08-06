@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import userRepository from "../repositories/userRepository.js";
 
 export type CreateUserData = Omit<User, "id"|"createdAt"|"updatedAt">;
+export type CreateUserTestData = Omit<User, "id"|"isAdmin"|"createdAt"|"updatedAt">;
 
 async function insert(user: CreateUserData) {
     user.password = bcrypt.hashSync(user.password, 10);
