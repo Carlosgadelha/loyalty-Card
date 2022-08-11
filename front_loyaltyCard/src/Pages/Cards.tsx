@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import Footer from "../components/footer"
+import Footer from "../components/Footer"
 import Card from '../components/Card';
 
 function Cards(){
@@ -37,7 +37,7 @@ const Container = styled.div`
         flex-direction: column;
         margin-top: 60px;
         align-items: center;
-        width: 80%;
+        width: 100%;
     }
 `
 
