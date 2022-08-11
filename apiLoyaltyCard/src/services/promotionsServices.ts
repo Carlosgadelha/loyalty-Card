@@ -1,14 +1,16 @@
 import { Promotions } from "@prisma/client";
 
 import promotionsRepository from "../repositories/promotionsRepository.js";
+import businessServices from "./businessServices.js";
 
 export type CreatePromotionData = Omit<Promotions, "id"|"createdAt"|"updatedAt">;
 export type UpdatePromotionData = Omit<Promotions, "createAt"|"updatedAt">;
 
 async function insert(promotion: CreatePromotionData) {
-    await promotionsRepository.insert(promotion);
+    const business = await businessServices.findById(promotion.businessId);
+    if(!business) throw { type: "not_found"};
+    return await promotionsRepository.insert(promotion);
 }
-
 async function findById(id: number) {
     
     const promotion = await promotionsRepository.findById(id);

@@ -7,6 +7,15 @@ async function insert(business: CreateBusinessData) {
     });
 }
 
+async function findById(id: number) {
+    return await prisma.business.findUnique({
+        where: {
+            id
+        }
+    });
+}
+
 export default {
-    insert
+    insert,
+    findById
 }
