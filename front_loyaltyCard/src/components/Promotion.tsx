@@ -2,15 +2,19 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { BsCheckLg } from "react-icons/bs";
 
+interface Props{
+    promotionId: number;
+    title: string;
+}
 
-function Promotion(){
+function Promotion({promotionId, title}: Props) {
 
     const navigate = useNavigate();
 
     return (
         <Container>
 
-            <h1 onClick={ () => navigate("/addPoints")}>Na compra de 10 ganha 1</h1>
+            <h1 onClick={ () => navigate(`/addPoints/${promotionId}`)}>{title}</h1>
 
             
         </Container>
@@ -29,7 +33,7 @@ const Container = styled.div`
         box-shadow: 0px 0px 10px  #DA7422;
 
         padding: 20px;
-        margin-bottom: 20px;
+        margin-top: 20px;
         border-radius: 10px;
         
         width: 80%;

@@ -2,9 +2,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from "react";
 import axios from "axios";
+import { useManageData } from '../providers/gerenciarDados.js';
 
 export default function Login() {
     window.localStorage.clear();
+    const {setToken} = useManageData();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -12,8 +14,22 @@ export default function Login() {
 
     function handleSubmit(event: any) {
         event.preventDefault();
-        navigate("/home");
 
+        axios.post("/signin", {
+            email,
+            password
+        })
+        .then(response => {
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("code", response.data.code);
+            localStorage.setItem("name", response.data.name);
+            setToken(response.data.token);
+            navigate("/home");
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        
     }
     
     return (

@@ -20,7 +20,14 @@ async function findById(id: number) {
     return business;
 }
 
+async function findAll(id: number) {
+    const businesses = await businessRepository.findAll(id);
+    if(!businesses) throw { type: "not_found"};
+    return businesses;
+}
+
 export default {
     insert,
-    findById
+    findById,
+    findAll
 }

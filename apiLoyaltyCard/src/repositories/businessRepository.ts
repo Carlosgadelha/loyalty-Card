@@ -15,7 +15,16 @@ async function findById(id: number) {
     });
 }
 
+async function findAll(id: number) {
+    return await prisma.business.findMany({
+        where: {
+            userId: id
+        }
+    });
+}
+
 export default {
     insert,
+    findAll,
     findById
 }

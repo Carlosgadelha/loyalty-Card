@@ -44,7 +44,7 @@ async function findByEmailAndPassword(email: string, password: string){
     if(!bcrypt.compareSync(password, user.password)) throw { type: "unauthorized"};
 
     
-    return { token, code: user.code};
+    return { token, code: user.code, name: user.name};
 }
 
 

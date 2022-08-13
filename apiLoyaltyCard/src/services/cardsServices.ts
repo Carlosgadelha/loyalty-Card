@@ -40,10 +40,14 @@ async function addPointsCard(code: string, promotionId: number) {
     let clientId = null;
 
     const user = await userServices.findByCode(code);
+    console.log({user});
     
     const { businessId } = await promotionsServices.findById(promotionId);
     const client = await clientsServices.findByUserIdAndBusinessId(user.id, businessId);
     clientId = client?.id;
+
+    console.log({clientId, businessId});
+    
     
     if(!client) {
         await clientsServices.insert({userId: user.id, businessId});

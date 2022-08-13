@@ -7,16 +7,26 @@ import Footer from "../components/Footer"
 import Qrcode from "../components/Qrcode"
 
 function Home(){
+
     const navigate = useNavigate();
+    const code = localStorage.getItem('code')?.toUpperCase();
+    const name = localStorage.getItem('name');
+
     return (
         <Container>
             <div className="menu">
-                <IoExitOutline className="icon" onClick={() => navigate('/')}/>
+                <p>{`Olá, ${name} `}</p>
+                <IoExitOutline className="icon" onClick={() => {
+                    navigate('/')
+                    window.localStorage.clear();
+                }}/>
+                
             </div>
+            <h1>Ao fazer uma compra forneça o codigo abaixo:</h1>
             <div className="code">
-                <h1>B3W2</h1>
+                <h1>{code}</h1>
             </div>
-            {/* < Qrcode /> */}
+            
             < Footer />
 
         </Container>
@@ -33,6 +43,12 @@ const Container = styled.div`
     height: 100vh;
     width: 100vw;
 
+    h1{
+        margin-bottom: 20px;
+        font-size: 20px;
+        color: #DA7422;
+    }
+
     .menu {
         /* padding: 0 1%; */
         width: 100%;
@@ -43,7 +59,13 @@ const Container = styled.div`
         color: #ffffff;
         top: 0;
         left: 0;
-        justify-content: end;
+        justify-content: space-between;
+        p{
+            font-size: 30px;
+            font-weight: bold;
+            margin-left: 10px;
+
+        }
         .icon{
             font-size: 40px;
             font-weight: bold;

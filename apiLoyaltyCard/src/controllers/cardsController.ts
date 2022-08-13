@@ -3,7 +3,8 @@ import cardsServices from "../services/cardsServices.js";
 
 
 export async function addPointsCard(req: Request, res: Response) {
-    const { code, promotionId } = req.body;
+    const promotionId = parseInt(req.params.promotionId);
+    const { code } = req.body;
     const card = await cardsServices.addPointsCard(code, promotionId);
     return res.send(card);
 }
@@ -18,7 +19,7 @@ export async function getCard(req: Request, res: Response){
 
 export async function getCards(req: Request, res: Response){
 
-    const userId = parseInt(req.body.userId);
+    const userId = parseInt(res.locals.userId);
     const cards = await cardsServices.findAll(userId);
     return res.send(cards);
 

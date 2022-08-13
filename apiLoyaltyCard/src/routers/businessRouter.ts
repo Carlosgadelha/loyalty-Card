@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { createBusiness, createPromotion } from "../controllers/businessController.js";
+import { createBusiness, findAll } from "../controllers/businessController.js";
 import { validateSchemaMiddleware } from "../middlewares/validateSchema.js";
+import { validateToken } from "../middlewares/validateToken.js";
 import { businessSchema } from "../schemas/businessSchema.js";
-import { promotionSchema } from "../schemas/promotionSchema.js";
 
 const businessRouter = Router();
 
 businessRouter.post("/business", validateSchemaMiddleware(businessSchema), createBusiness )
-businessRouter.post("/promotion",validateSchemaMiddleware(promotionSchema), createPromotion )
+businessRouter.get("/business", validateToken , findAll)
 
 export default businessRouter;

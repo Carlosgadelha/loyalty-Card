@@ -30,7 +30,9 @@ async function findAll(id: number) {
 
     return await prisma.promotions.findMany({
         where: {
-            businessId: id
+            business:{
+                userId: id
+            }
         }
     });  
 }

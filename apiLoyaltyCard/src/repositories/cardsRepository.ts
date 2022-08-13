@@ -12,6 +12,21 @@ async function findById(id: number) {
     return await prisma.card.findUnique({
         where: {
             id
+        },select:{
+            id: true,
+            points: true,
+            promotion:{
+                select: { 
+                    name: true ,
+                    pointsNeeded: true,
+                    discount: true,
+                    business:{
+                        select:{
+                            name: true
+                        }
+                    }
+                }
+            }
         }
     });
 
@@ -42,7 +57,24 @@ async function findAll(id: number) {
 
     return await prisma.card.findMany({
         where: {
-            clientId: id
+            client:{
+                userId: id
+            }
+        },select:{
+            id: true,
+            points: true,
+            promotion:{
+                select: { 
+                    name: true ,
+                    pointsNeeded: true,
+                    discount: true,
+                    business:{
+                        select:{
+                            name: true
+                        }
+                    }
+                }
+            }
         }
     });  
 }

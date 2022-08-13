@@ -12,20 +12,20 @@ import Card from '../components/Card';
 import NewBusiness from './NewBusiness';
 import NewPromotion from './NewPromotion';
 import Promotion from '../components/Promotion';
+import { useManageData } from '../providers/gerenciarDados';
 
 function Business(){
     const navigate = useNavigate();
-    
-    const [promotion, setPromotion] = useState([]);
+    const {business, promotions} = useManageData();
 
 
     return (
         <Container>
 
-            <h1>Business</h1>
+            <h1>{business[0]?.name}</h1>
             <div className="promotions">
                 {
-                    !promotion.length? 
+                    !promotions.length? 
 
                         <>
                             <h2>Promoções</h2>
@@ -36,8 +36,8 @@ function Business(){
                         </>
 
                     :   <>
-                            <h2>Promotions</h2>
-                            < Promotion />
+                            <h2>Promoções</h2>
+                            {promotions.map(promotion => < Promotion promotionId={promotion.id} title={promotion.name} />)}
                         </>
                 } 
             </div>

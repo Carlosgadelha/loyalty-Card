@@ -19,7 +19,16 @@ async function findById(id: number) {
     return promotion;
 }
 
+async function findAll(id: number) {
+    
+    const promotions = await promotionsRepository.findAll(id);
+    if(!promotions) throw { type: "not_found"};
+
+    return promotions;
+}
+
 export default {
     insert,
-    findById
+    findById,
+    findAll
 }

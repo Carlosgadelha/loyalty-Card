@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import businessServices, { CreateBusinessData } from "../services/businessServices.js";
-import promotionsServices, { CreatePromotionData } from "../services/promotionsServices.js";
 
 
 export async function createBusiness(req: Request, res: Response) {
@@ -12,12 +11,8 @@ export async function createBusiness(req: Request, res: Response) {
     
 }
 
-export async function createPromotion(req: Request, res: Response) {
-
-    const promotion: CreatePromotionData = req.body;
-
-    await promotionsServices.insert(promotion);
-    return res.sendStatus(201);
-    
-
+export async function findAll(req: Request, res: Response) {
+        const userId = parseInt(res.locals.userId);
+        const businesses = await businessServices.findAll(userId);
+        return res.send(businesses);
 }

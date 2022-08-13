@@ -6,15 +6,14 @@ import { useEffect, useState } from 'react';
 
 function Header(){
     const navigate = useNavigate();
+    const regx = new RegExp('/infoCard/')
 
     const [selectedInfoCard, setSelectedInfoCard] = useState(false);
     const [selectNewPromotion, setSelectedNewPromotion] = useState(false);
     const [selectedNewBusiness, setSelectedNeWBusiness] = useState(false);
-
-
-
+    
     useEffect(() => {
-        if(location.pathname === '/infoCard') setSelectedInfoCard(true);
+        if(regx.test(location.pathname)) setSelectedInfoCard(true);
         if(location.pathname === '/newPromotion') setSelectedNewPromotion(true);
         if(location.pathname === '/newBusiness') setSelectedNeWBusiness(true);
     },[])
@@ -26,7 +25,7 @@ function Header(){
                 onClick={() => {
                     if(selectNewPromotion) navigate('/business')
                     if(selectedInfoCard) navigate('/cards')
-                    if(selectedNewBusiness) navigate('/')
+                    if(selectedNewBusiness) navigate('/home')
                 }}
             />
         </Container>

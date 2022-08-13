@@ -1,31 +1,34 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { BsCheckLg } from "react-icons/bs";
+import { memo } from 'react';
 
+interface Props{
+    id: number;
+    title: string;
+    nameBusiness: string;
+    points: number;
+    pointsNeeded: number;
+}
 
-function Card(){
+function Card({title, points, pointsNeeded, nameBusiness, id}: Props) {
 
     const navigate = useNavigate();
+
+    const check = new Array(points).fill(0);
+    const noCheck = new Array(pointsNeeded - points).fill(0);
 
     return (
         <Container>
 
-            <h1 onClick={ () => navigate("/infoCard")}>Na compra de 10 ganha 1</h1>
+            <h1 onClick={ () => navigate(`/infoCard/${id}`)}>{title}</h1>
             <div className="pontos">
-
-                <BsCheckLg className="check" />
-                <div className="ponto"></div>
-                <div className="ponto"></div>
-                <div className="ponto"></div>
-                <div className="ponto"></div>
-                <div className="ponto"></div>
-                <div className="ponto"></div>
-                <div className="ponto"></div>
-                <div className="ponto"></div>
-                <div className="ponto"></div>
                 
+                { check.map(point => {return <BsCheckLg className="check" />}) }
+                { noCheck.map(point => {return <div className="ponto"></div>}) }
+                                
             </div>
-            <p>Loja de doces </p>
+            <p>{nameBusiness}</p>
             
         </Container>
     )
@@ -95,4 +98,4 @@ const Container = styled.div`
     
 `
 
-export default Card;
+export default memo(Card);

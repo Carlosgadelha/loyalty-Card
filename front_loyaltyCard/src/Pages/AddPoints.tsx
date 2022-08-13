@@ -1,25 +1,43 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../components/Footer';
+import axios from 'axios';
+import { useState } from 'react';
 
 
 function AddPoints(){
 
     const navigate = useNavigate();
+    const {promotionId} = useParams();
+    const [code, setCode] = useState('');
+
+    function addPoints(event: any){
+        event.preventDefault();
+        axios.post(`/addPoints/${promotionId}`,{
+            code
+        })
+        .then(res => {
+            navigate('/business')
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
 
     return (
         <Container>
 
             <div className="addPoints">
+                <form onSubmit={addPoints}>
 
-                <h1> Adicionar Pontos ao Card</h1>
+                    <h1> Adicionar Pontos ao Card</h1>
+                    
+                    <input type="text" placeholder="Código Cliente" autoFocus onChange={(e) => setCode(e.target.value)}/>
                 
-                <input type="text" placeholder="Código Cliente" autoFocus />
-            
-                <button className="btn">Adicionar</button>
+                    <button className="btn" type="submit">Adicionar</button>
+                </form>
             </div>
             <Footer />
-            
         </Container>
     )
 }

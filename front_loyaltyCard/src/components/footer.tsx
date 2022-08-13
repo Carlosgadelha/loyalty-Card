@@ -2,20 +2,21 @@ import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ImHome3, ImHome, ImCreditCard, ImEqualizer } from "react-icons/im"
 import { RiShoppingBag3Fill } from "react-icons/ri"
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import axios from 'axios';
+import { useManageData } from '../providers/gerenciarDados.js';
 
 interface ContainerProps {
-    selectedCards: boolean;
-    selectedHome: boolean;
-    selectedOptions: boolean;
-    selectedBusiness: boolean;
+    selectedCards: boolean
+    selectedHome: boolean
+    selectedOptions: boolean
+    selectedBusiness: boolean
 }
 
 function Footer(){
     const navigate = useNavigate();
     const location = useLocation();
-
-    const [business, setBusiness] = useState([1]);
+    const {business} = useManageData();
 
     const [selectedCards, setSelectedCards] = useState(false);
     const [selectedHome, setSelectedHome] = useState(false);
@@ -28,6 +29,7 @@ function Footer(){
         if(location.pathname === '/cards') setSelectedCards(true);
         if(location.pathname === '/options') setSelectedOptions(true);
         if(location.pathname === '/business') setSelectedBusiness(true);
+
     },[])
 
     return(
@@ -46,10 +48,10 @@ function Footer(){
                 className='icon selectedHome'/>
             <RiShoppingBag3Fill 
                 onClick={() =>{
-                    !business.length?
-                        navigate('/newBusiness')
-                    :   
+                    business.length > 0?
                         navigate("/business")
+                    :   
+                        navigate('/newBusiness')
                     
                     setSelectedBusiness(true);
                  }}
