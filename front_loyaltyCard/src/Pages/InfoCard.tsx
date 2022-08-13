@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import { IoArrowBack } from "react-icons/io5";
 import { useNavigate, useParams } from 'react-router-dom';
-import { BsCheckLg } from "react-icons/bs";
 import Card from '../components/Card';
 import Header from '../components/Header';
 import { useEffect, useState } from 'react';

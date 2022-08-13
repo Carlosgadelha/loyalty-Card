@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { BsCheckLg } from "react-icons/bs";
 import Header from '../components/Header';
 
 
@@ -46,8 +45,6 @@ const Container = styled.div`
         display: flex;
         flex-direction: column;
         position: relative;
-        /* justify-content: center;
-        align-items: center; */
         border: 3px solid #DA7422; 
         box-shadow: 0px 0px 10px  #DA7422;
 

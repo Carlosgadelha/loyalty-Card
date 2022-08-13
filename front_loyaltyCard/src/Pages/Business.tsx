@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { BiExit } from "react-icons/bi"
 import { IoExit, IoExitOutline } from "react-icons/io5";
 
-import Footer from "../components/footer"
+import Footer from "../components/Footer"
 import { useState } from 'react';
 import Card from '../components/Card';
 import NewBusiness from './NewBusiness';

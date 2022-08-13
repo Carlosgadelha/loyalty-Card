@@ -7,9 +7,10 @@ import jwt from "jsonwebtoken";
 import userRepository from "../repositories/userRepository.js";
 
 export type CreateUserData = Omit<User, "id"|"createdAt"|"updatedAt">;
+export type UserData = Omit<User, "id"|"createdAt"|"updatedAt"|"code"|"isAdmin">;
 export type CreateUserTestData = Omit<User, "id"|"isAdmin"|"createdAt"|"updatedAt"|"code">;
 
-async function insert(user: CreateUserData) {
+async function insert(user: UserData) {
     user.password = bcrypt.hashSync(user.password, 10);
     const code = faker.random.alphaNumeric(4);
     await userRepository.insert({...user, code, isAdmin: false});

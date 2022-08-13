@@ -15,7 +15,19 @@ export default function signup() {
 
     function handleSubmit(event: any) {
         event.preventDefault();
-        navigate("/");
+        axios.post('/signup', {
+            name,
+            email,
+            password,
+            passwordConfirmation
+        })
+        .then(res => {
+            navigate("/");
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        
     }
     
     return (
@@ -28,9 +40,21 @@ export default function signup() {
                     value= {name}
                     onChange={ e => setName(e.target.value)}
                 />
-                < input type="text" placeholder="Email" onChange={ e => setEmail(e.target.value)}/>
-                < input type="password" placeholder="Senha" onChange={ e => setPassword(e.target.value)}/>
-                < input type="password" placeholder="Confirmar Senha" onChange={ e => setPasswordConfirmation(e.target.value)}/>
+                < input 
+                    type="text" 
+                    placeholder="Email"
+                    value= {email} 
+                    onChange={ e => setEmail(e.target.value)}/>
+                < input 
+                    type="password" 
+                    placeholder="Senha" 
+                    value= {password}
+                    onChange={ e => setPassword(e.target.value)}/>
+                < input 
+                    type="password" 
+                    placeholder="Confirmar Senha" 
+                    value= {passwordConfirmation}
+                    onChange={ e => setPasswordConfirmation(e.target.value)}/>
                 < button type="submit">Cadastrar</button>
             </form>
             <StyledLink to="/">Não tem uma conta? Cadastre-se aqui</StyledLink>

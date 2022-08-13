@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import userServices, { CreateUserData } from "../services/userServices.js";
+import userServices, { CreateUserData, UserData } from "../services/userServices.js";
 
 
 export async function createUser(req: Request, res: Response) {
 
-    const user = req.body as CreateUserData;
+    const {name, email, password} = req.body as UserData;
 
-    await userServices.insert(user);
+    await userServices.insert({name, email, password});
     return res.sendStatus(201);
     
 }
