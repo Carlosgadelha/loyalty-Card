@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import Footer from "../components/Footer"
+import Footer from "../components/footer"
 import Card from '../components/Card';
 import { useEffect, useState } from 'react';
 import axios from 'axios';

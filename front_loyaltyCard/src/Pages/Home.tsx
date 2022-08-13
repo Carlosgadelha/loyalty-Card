@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import { BiExit } from "react-icons/bi"
 import { IoExit, IoExitOutline } from "react-icons/io5";
 
-import Footer from "../components/Footer"
+import Footer from "../components/footer"
 import Qrcode from "../components/Qrcode"
 
 function Home(){
