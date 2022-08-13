@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import axios from 'axios';
 import { useState } from 'react';
 
