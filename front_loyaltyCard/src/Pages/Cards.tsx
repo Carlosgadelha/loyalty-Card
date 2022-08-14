@@ -56,9 +56,10 @@ function Cards(){
                             />  
                 })}
             </>
-            
             </div>
-            
+            <div className="menssage">
+                {cards.length === 0 && <h1>Nenhum Cartão encontrado ...</h1>}
+            </div>
             <Footer />
 
         </Container>
@@ -69,6 +70,7 @@ const Container = styled.div`
 
     background-color: #ECDCB0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     height: 100vh;
     width: 100vw;
@@ -80,6 +82,22 @@ const Container = styled.div`
         align-items: center;
         width: 100%;
     }
+
+    .menssage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+
+        h1{
+            font-size: 30px;
+            font-weight: 700;
+            color: #2C5530;
+            
+        }
+    }
+
 `
 
 export default Cards;

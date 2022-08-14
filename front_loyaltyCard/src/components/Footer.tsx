@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ImHome3, ImHome, ImCreditCard, ImEqualizer } from "react-icons/im"
+import { ImHome, ImCreditCard, ImEqualizer } from "react-icons/im"
 import { RiShoppingBag3Fill } from "react-icons/ri"
-import { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useManageData } from '../providers/gerenciarDados.js';
 
 interface ContainerProps {
@@ -56,7 +55,7 @@ function Footer(){
                     setSelectedBusiness(true);
                  }}
                 className='icon selectedBusiness'/>
-            < ImEqualizer  className='icon selectedOptions'/>
+            {/* < ImEqualizer  className='icon selectedOptions'/> */}
         </Container>
     )
 }
@@ -97,8 +96,9 @@ const Container = styled.div<ContainerProps>`
         color:${props  =>  props.selectedBusiness ? '#DA7422' : '#ffffff'}
     }
 
-    .selectedOptions{
+    /* .selectedOptions{
         color:${props  =>  props.selectedOptions ? '#DA7422' : '#ffffff'}
-    }
+    } 
+    */
 `
 export default Footer;

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import { useState } from 'react';
+import Header from '../components/Header';
 
 
 function AddPoints(){
@@ -26,7 +27,7 @@ function AddPoints(){
 
     return (
         <Container>
-
+            <Header/>
             <div className="addPoints">
                 <form onSubmit={addPoints}>
 

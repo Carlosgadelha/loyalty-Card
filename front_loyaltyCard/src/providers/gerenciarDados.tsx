@@ -6,6 +6,7 @@ interface IManageData {
     setToken(token: string): void
     promotions: any[]
     updatePromotions(): void
+    updateBusiness(): void
 }
 
 export const ManageDataContext = react.createContext<IManageData>({} as IManageData);
@@ -17,13 +18,13 @@ export const ManageDataProvider: react.FC<any> = (props) =>{
     const [token, setToken] = react.useState<string>("");
 
     react.useEffect(() => {
-            getBusiness();
+            updateBusiness();
             updatePromotions();
     } , [token]);
 
     console.log({token, business, promotions});
 
-    const getBusiness = async () => {
+    const updateBusiness = async () => {
         const response = await axios.get('/business',{
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -48,6 +49,7 @@ export const ManageDataProvider: react.FC<any> = (props) =>{
             business,
             setToken,
             updatePromotions,
+            updateBusiness,
             promotions
         }}>
             {props.children}

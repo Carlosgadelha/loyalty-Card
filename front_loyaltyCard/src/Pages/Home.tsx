@@ -62,6 +62,7 @@ const Container = styled.div`
             font-size: 30px;
             font-weight: bold;
             margin-left: 10px;
+            color: #DA7422;
 
         }
         .icon{

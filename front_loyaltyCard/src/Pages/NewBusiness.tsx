@@ -1,23 +1,48 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import axios from 'axios';
+import { useState } from 'react';
+import { useManageData } from '../providers/gerenciarDados';
 
 
 function NewBusiness(){
 
     const navigate = useNavigate();
+    const [name, setName] = useState('');
+    const {updateBusiness} = useManageData();
+
+    function handleSubmit(event: any){
+        event.preventDefault();
+        
+        axios.post('/business', {
+            name: name
+        },{
+            headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+            }
+        })
+            .then(res => {
+                navigate("/business");
+                updateBusiness();
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     return (
         <Container>
             < Header />
 
             <div className="newBusiness">
-
-                <h1> Criar uma Loja</h1>
+                <form onSubmit={handleSubmit}>
+                    <h1> Criar uma Loja</h1>
+                    
+                    <input type="text" placeholder="Nome da Loja" autoFocus onChange={(e) => setName(e.target.value)} />
                 
-                <input type="text" placeholder="Nome da Loja" autoFocus />
-            
-                <button className="btn">Salvar</button>
+                    <button className="btn" type="submit">Salvar</button>
+                </form>
             </div>
             
         </Container>

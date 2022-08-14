@@ -21,14 +21,17 @@ function Business(){
 
     return (
         <Container>
-
-            <h1>{business[0]?.name}</h1>
+            <div className="header">
+                <h1>{business[0]?.name}</h1>
+                <h2>Promoções</h2>
+            </div>
+            
             <div className="promotions">
                 {
                     !promotions.length? 
 
                         <>
-                            <h2>Promoções</h2>
+                            
                             <Fab aria-label="add" className='addPromotion' onClick={() => { navigate('/newPromotion')}}>
                                 <AddIcon />
                             </Fab>
@@ -36,8 +39,11 @@ function Business(){
                         </>
 
                     :   <>
-                            <h2>Promoções</h2>
+                            
                             {promotions.map(promotion => < Promotion promotionId={promotion.id} title={promotion.name} />)}
+                            <Fab aria-label="add" className='addPromotion' onClick={() => { navigate('/newPromotion')}}>
+                                <AddIcon />
+                            </Fab>
                         </>
                 } 
             </div>
@@ -53,28 +59,29 @@ const Container = styled.div`
     background-color: #ECDCB0;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     width: 100vw;
 
-    h1{
-        font-size: 30px;
-        color: #DA7422;
-        text-align: left;
-        margin: 20px 0px  10px 20px ;
-        font-family: 'Alfa Slab One', cursive;
-        font-weight: 400;
-        width: 100%;
-    }
-
-    .promotions{
+    .header {
         display: flex;
         flex-direction: column;
-        margin-top: 10px;
-        align-items: center;
-        height: 100%;
+        position:fixed;
+        top: 0;
+        left: 0;
+        background-color: #ECDCB0;
         width: 100%;
+
+        h1{
+            font-size: 30px;
+            color: #DA7422;
+            text-align: left;
+            margin: 20px 0px  10px 20px ;
+            font-family: 'Alfa Slab One', cursive;
+            font-weight: 400;
+            width: 100%;
+        }
 
         h2{
             font-size: 25px;
@@ -87,8 +94,25 @@ const Container = styled.div`
             font-family: 'Alfa Slab One', cursive;
             font-weight: 400;
         }
+    }
+
+    
+
+    .promotions{
+        display: flex;
+        flex-direction: column;
+        margin-top: 100px;
+        align-items: center;
+        padding-bottom: 150px;
+        height: 100%;
+        width: 100%;
+
+        /* &:nth-last-of-type(){
+            margin-bottom: 60px;
+        } */
+
         .addPromotion{
-            position: absolute;
+            position: fixed;
             bottom: 80px;
             right: 20px;
             background-color: #ffffff;

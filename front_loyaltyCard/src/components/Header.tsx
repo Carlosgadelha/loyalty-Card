@@ -7,15 +7,18 @@ import { useEffect, useState } from 'react';
 function Header(){
     const navigate = useNavigate();
     const regx = new RegExp('/infoCard/')
+    const regxAddPoints = new RegExp('/addPoints/')
 
     const [selectedInfoCard, setSelectedInfoCard] = useState(false);
     const [selectNewPromotion, setSelectedNewPromotion] = useState(false);
     const [selectedNewBusiness, setSelectedNeWBusiness] = useState(false);
+    const [addPoints, setAddPoints] = useState(false);
     
     useEffect(() => {
         if(regx.test(location.pathname)) setSelectedInfoCard(true);
         if(location.pathname === '/newPromotion') setSelectedNewPromotion(true);
         if(location.pathname === '/newBusiness') setSelectedNeWBusiness(true);
+        if(regxAddPoints.test(location.pathname)) setAddPoints(true);
     },[])
 
     return(
@@ -26,6 +29,7 @@ function Header(){
                     if(selectNewPromotion) navigate('/business')
                     if(selectedInfoCard) navigate('/cards')
                     if(selectedNewBusiness) navigate('/home')
+                    if(addPoints) navigate('/business')
                 }}
             />
         </Container>

@@ -8,11 +8,11 @@ interface newUser extends CreateUserData{
 export const userSchema = Joi.object<newUser>({
     name: Joi.string().required(),
     email: Joi.string().email().required().empty(''),
-    password: Joi.string().min(10).required().empty(''),
+    password: Joi.string().required().empty(''),
     passwordConfirmation: Joi.ref("password"),
 });
 
 export const loginSchema = Joi.object<CreateUserData>({
     email: Joi.string().email().required(),
-    password: Joi.string().min(10).required()
+    password: Joi.string().required()
 });

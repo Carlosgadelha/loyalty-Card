@@ -4,9 +4,9 @@ import userServices, { CreateUserData, UserData } from "../services/userServices
 
 export async function createUser(req: Request, res: Response) {
 
-    const {name, email, password} = req.body as UserData;
+    const {name, email, password} = req.body;
 
-    await userServices.insert({name, email, password});
+    await userServices.insert({name, email, password} as UserData);
     return res.sendStatus(201);
     
 }

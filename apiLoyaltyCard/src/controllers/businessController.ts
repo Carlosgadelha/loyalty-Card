@@ -5,8 +5,9 @@ import businessServices, { CreateBusinessData } from "../services/businessServic
 export async function createBusiness(req: Request, res: Response) {
 
     const business: CreateBusinessData = req.body;
+    const userId = parseInt(res.locals.userId);
 
-    await businessServices.insert(business);
+    await businessServices.insert({...business, userId});
     return res.sendStatus(201);
     
 }

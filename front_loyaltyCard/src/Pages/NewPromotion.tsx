@@ -1,25 +1,75 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import { useManageData } from '../providers/gerenciarDados';
+import axios from 'axios';
+import { useState } from 'react';
 
 
 function NewPromotion(){
 
     const navigate = useNavigate();
+    const {business, updatePromotions} = useManageData();
+
+    const [name, setName] = useState('');
+    const [pointsNeeded, setPointsNeeded] = useState<String | Number>('');
+    const [discount, setDiscount] = useState<String | Number>('');
+
+    function handleSubmit(event: any){
+        event.preventDefault();
+        
+        axios.post('/promotion', {
+            name,
+            pointsNeeded,
+            discount,
+            businessId: business[0].id
+        },{
+            headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+            }
+        })
+            .then(res => {
+                navigate("/business");
+                updatePromotions();
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     return (
         <Container>
             < Header />
 
             <div className="newPromotion">
+                <form onSubmit={handleSubmit}>
 
-                <h1> Criar uma Promoção</h1>
+                    <h1> Criar uma Promoção</h1>
+                    
+                    <input 
+                        type="text" 
+                        placeholder="Nome da promoção" 
+                        autoFocus 
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="desconto" 
+                        autoFocus
+                        onChange={(e) => setDiscount(parseInt(e.target.value))}
+                        value={discount?.toString()}
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="pontos nescessarios" 
+                        autoFocus 
+                        onChange={(e) => setPointsNeeded(parseInt(e.target.value))}
+                        value={pointsNeeded?.toString()}
+                    />
                 
-                <input type="text" placeholder="Nome da promoção" autoFocus />
-                <input type="text" placeholder="desconto" autoFocus />
-                <input type="text" placeholder="pontos nescessarios" autoFocus />
-            
-                <button className="btn">Salvar</button>
+                    <button className="btn" type="submit">Salvar</button>
+                </form>
             </div>
             
         </Container>
