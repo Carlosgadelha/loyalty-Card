@@ -16,8 +16,8 @@ function NewBusiness(){
     function handleSubmit(event: any){
         event.preventDefault();
         
-        const promise = axios.post('/business', {
-            name: name
+        axios.post('/business', {
+            name
         },{
             headers: {
                 'Authorization': 'Bearer ' + window.localStorage.getItem('token')
