@@ -12,7 +12,7 @@ export type CreateUserTestData = Omit<User, "id"|"isAdmin"|"createdAt"|"updatedA
 
 async function insert(user: UserData) {
     user.password = bcrypt.hashSync(user.password, 10);
-    const code = faker.random.alphaNumeric(4);
+    const code = (faker.random.alphaNumeric(4)).toUpperCase();
     await userRepository.insert({...user, code, isAdmin: false});
 }
 

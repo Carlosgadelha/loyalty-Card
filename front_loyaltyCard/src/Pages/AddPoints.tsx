@@ -16,7 +16,7 @@ function AddPoints(){
     function addPoints(event: any){
         event.preventDefault();
         axios.post(`/addPoints/${promotionId}`,{
-            code
+            code: code.toUpperCase()
         })
         .then(res => {
             toast.success('Pontos adicionados com sucesso!');
