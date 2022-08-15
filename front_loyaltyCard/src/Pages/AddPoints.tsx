@@ -70,7 +70,6 @@ const Container = styled.div`
     align-items: center;
     background-color: #ECDCB0;
     width: 100vw;
-    max-width: 500px;
     height: 100vh;
 
     .addPoints{
@@ -84,7 +83,7 @@ const Container = styled.div`
         padding: 20px;
         margin-bottom: 20px;
         border-radius: 10px;
-        
+        max-width: 500px;
         width: 80%;
 
         h1{
