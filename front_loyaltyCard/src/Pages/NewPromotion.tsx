@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import toast, { Toaster } from 'react-hot-toast';
 import { useManageData } from '../providers/gerenciarDados';
 import axios from 'axios';
 import { useState } from 'react';
@@ -29,12 +30,18 @@ function NewPromotion(){
             }
         })
             .then(res => {
+                toast.success('Promoção criada com sucesso!');
                 navigate("/business");
                 updatePromotions();
             })
             .catch(err => {
+                setName('');
+                setPointsNeeded('');
+                setDiscount('');
+                toast.error('Erro ao criar promoção');
                 console.log(err);
             })
+
     }
 
     return (
@@ -71,12 +78,15 @@ function NewPromotion(){
                     <button className="btn" type="submit">Salvar</button>
                 </form>
             </div>
-            
+            <Toaster 
+                position="bottom-right"
+                reverseOrder={false}
+            /> 
         </Container>
     )
 }
 
-const Container = styled.div`
+const Container = styled.div`   
 
     *{
         box-sizing: border-box;

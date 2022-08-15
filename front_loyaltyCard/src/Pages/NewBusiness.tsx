@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { useState } from 'react';
 import { useManageData } from '../providers/gerenciarDados';
@@ -15,7 +16,7 @@ function NewBusiness(){
     function handleSubmit(event: any){
         event.preventDefault();
         
-        axios.post('/business', {
+        const promise = axios.post('/business', {
             name: name
         },{
             headers: {
@@ -24,9 +25,12 @@ function NewBusiness(){
         })
             .then(res => {
                 navigate("/business");
+                toast.success('Loja criada com sucesso!');
                 updateBusiness();
             })
             .catch(err => {
+                setName('');
+                toast.error('Erro ao criar Loja');
                 console.log(err);
             })
     }
@@ -39,11 +43,21 @@ function NewBusiness(){
                 <form onSubmit={handleSubmit}>
                     <h1> Criar uma Loja</h1>
                     
-                    <input type="text" placeholder="Nome da Loja" autoFocus onChange={(e) => setName(e.target.value)} />
+                    <input 
+                        type="text" 
+                        placeholder="Nome da Loja" 
+                        autoFocus 
+                        onChange={(e) => setName(e.target.value)}
+                        value={name} 
+                    />
                 
                     <button className="btn" type="submit">Salvar</button>
                 </form>
             </div>
+            <Toaster 
+                position="bottom-right"
+                reverseOrder={false}
+            />
             
         </Container>
     )

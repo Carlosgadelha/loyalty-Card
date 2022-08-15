@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import { useState } from 'react';
@@ -18,11 +19,15 @@ function AddPoints(){
             code
         })
         .then(res => {
+            toast.success('Pontos adicionados com sucesso!');
             navigate('/business')
         })
         .catch(err => {
+            setCode('');
+            toast.error('Erro ao adicionar pontos! Confira o código.');
             console.log(err);
         })
+
     }
 
     return (
@@ -33,12 +38,22 @@ function AddPoints(){
 
                     <h1> Adicionar Pontos ao Card</h1>
                     
-                    <input type="text" placeholder="Código Cliente" autoFocus onChange={(e) => setCode(e.target.value)}/>
+                    <input 
+                        type="text" 
+                        placeholder="Código Cliente" 
+                        autoFocus 
+                        onChange={(e) => setCode(e.target.value)}
+                        value={code}
+                    />
                 
                     <button className="btn" type="submit">Adicionar</button>
                 </form>
             </div>
             <Footer />
+            <Toaster 
+                position="bottom-right"
+                reverseOrder={false}
+            /> 
         </Container>
     )
 }

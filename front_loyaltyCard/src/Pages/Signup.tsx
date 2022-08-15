@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import toast, { Toaster } from 'react-hot-toast';
 import { useState } from "react";
 import axios from "axios";
 
@@ -15,7 +16,7 @@ export default function signup() {
 
     function handleSubmit(event: any) {
         event.preventDefault();
-        axios.post('/signup', {
+        const promise = axios.post('/signup', {
             name,
             email,
             password,
@@ -27,6 +28,14 @@ export default function signup() {
         .catch(err => {
             console.log(err);
         })
+
+        toast.promise(promise,
+            {
+                loading: 'Salvando...',
+                success: <b> Usuario cadastrado com sucesso!</b>,
+                error: <b>Erro ao criar o Usuario</b>,
+            }
+        );
         
     }
     
@@ -58,6 +67,10 @@ export default function signup() {
                 < button type="submit">Cadastrar</button>
             </form>
             <StyledLink to="/">Não tem uma conta? Cadastre-se aqui</StyledLink>
+            <Toaster 
+                position="bottom-right"
+                reverseOrder={false}
+            /> 
         </Container>
     );
 }

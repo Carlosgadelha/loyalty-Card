@@ -1,8 +1,6 @@
 import { Business } from "@prisma/client";
 
 import businessRepository from "../repositories/businessRepository.js";
-import promotionsRepository from "../repositories/promotionsRepository.js";
-import { CreatePromotionData } from "./promotionsServices.js";
 import userServices from "./userServices.js";
 
 export type CreateBusinessData = Omit<Business, "id"|"createdAt"|"updatedAt">;

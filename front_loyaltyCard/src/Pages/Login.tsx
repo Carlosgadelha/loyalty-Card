@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import toast, { Toaster } from 'react-hot-toast';
 import { useState } from "react";
 import axios from "axios";
 import { useManageData } from '../providers/gerenciarDados.js';
@@ -15,7 +16,7 @@ export default function Login() {
     function handleSubmit(event: any) {
         event.preventDefault();
 
-        axios.post("/signin", {
+        const promise = axios.post("/signin", {
             email,
             password
         })
@@ -24,9 +25,13 @@ export default function Login() {
             localStorage.setItem("code", response.data.code);
             localStorage.setItem("name", response.data.name);
             setToken(response.data.token);
+            toast.success("Login efetuado com sucesso!");
             navigate("/home");
         })
         .catch(error => {
+            setEmail("");
+            setPassword("");
+            toast.error("Usuário ou senha inválidos");
             console.log(error);
         })
         
@@ -49,6 +54,10 @@ export default function Login() {
                 < button type="submit">Entrar</button>
             </form>
             <StyledLink to="/signup">Não tem uma conta? Cadastre-se aqui</StyledLink>
+            <Toaster 
+                position="bottom-right"
+                reverseOrder={false}
+            /> 
         </Container>
     );
 }
