@@ -24,18 +24,16 @@ export default function signup() {
         })
         .then(res => {
             navigate("/");
+            toast.success('Usuário criado com sucesso!');
         })
         .catch(err => {
+            setName('');
+            setEmail('');
+            setPassword('');
+            setPasswordConfirmation('');
+            toast.error('Erro ao criar usuário!');
             console.log(err);
         })
-
-        toast.promise(promise,
-            {
-                loading: 'Salvando...',
-                success: <b> Usuario cadastrado com sucesso!</b>,
-                error: <b>Erro ao criar o Usuario</b>,
-            }
-        );
         
     }
     
@@ -136,5 +134,9 @@ const Container = styled.div`
         color: #ffffff;
         font-size: 30px;
         font-weight:400;
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 `
