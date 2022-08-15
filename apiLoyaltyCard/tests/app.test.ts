@@ -1,9 +1,17 @@
 import supertest from "supertest";
 import app from "../src/app.js";
-import { deleteAll, createBusiness } from "./factories/scenarioFactory.js";
+import { createBusiness } from "./factories/businessFactory.js";
+import { createPromotion } from "./factories/PromotionsFactory.js";
+import { deleteAll } from "./factories/scenarioFactory.js";
 import user, { createUser } from "./factories/userFactory.js";
 
 const agent = supertest(app)
+
+interface LoginResponse {
+    token: string;
+    code: string;
+    name: string;
+}
 
 beforeEach(async () => {
     await deleteAll()
@@ -63,12 +71,23 @@ describe("User", () => {
 
 describe("Business", () => {
     it("should answer with status 201 when a new business", async () => {
+
         const user = await createUser();
+        const login = { email: user.email, password: user.password };
+        
+        const resultLogin = await agent.post("/signin").send(login);
+        
         const business = {
             name: "test",
             userId: user.id
         }
-        const result = await agent.post("/business").send(business);
+        
+        const result = await agent.post("/business").set(
+            {
+                'Authorization': `Bearer ${resultLogin.body.token}`
+            }
+        ).send(business);
+        
         const status = result.status;
 
         expect(status).toEqual(201);
@@ -76,55 +95,60 @@ describe("Business", () => {
     })
 
     it("should answer with status 400 when business are invalid", async () =>{
+
         const user = await createUser();
+        const login = { email: user.email, password: user.password };
+        
+        const resultLogin = await agent.post("/signin").send(login);
         const business = {
             name: "",
             userId: user.id
         }
-        const result = await agent.post("/business").send(business);
+        const result = await agent.post("/business").set(
+            {
+                'Authorization': `Bearer ${resultLogin.body.token}`
+            }
+        ).send(business);
         const status = result.status;
 
         expect(status).toEqual(400);
 
     })
+} )
 
-    it("should answer with status 404 when user not exist", async () =>{
-        
-        const business = {
-            name: 'test',
-            userId: 1
-        }
-        const result = await agent.post("/business").send(business);
-        
-        const status = result.status;
-
-        expect(status).toEqual(404);
-
-    })
+describe("Promotions", () => {
 
     it("should answer with status 201 when a new promotion", async () => {
-        const business = await createBusiness();
+        const business: any = await createBusiness();
         const promotion = {
             name: "Promotion Test",
             discount: 10,
             pointsNeeded: 10,
             businessId: business.id
         }
-        const result = await agent.post("/promotion").send(promotion);
+        const result = await agent.post("/promotion").set(
+            {
+                'Authorization': `Bearer ${business.token}`
+            }
+        ).send(promotion);
         const status = result.status;
 
         expect(status).toEqual(201);
     })
 
     it("should answer with status 400 when promotion are invalid", async () =>{
-        const business = await createBusiness();
+        const business: any = await createBusiness();
         const promotion = {
             name: "",
             discount: 10,
             pointsNeeded: 10,
             businessId: business.id
         }
-        const result = await agent.post("/promotion").send(promotion);
+        const result = await agent.post("/promotion").set(
+            {
+                'Authorization': `Bearer ${business.token}`
+            }
+        ).send(promotion);
         const status = result.status;
 
         expect(status).toEqual(400);
@@ -139,7 +163,17 @@ describe("Business", () => {
             pointsNeeded: 10,
             businessId: 1
         }
-        const result = await agent.post("/promotion").send(promotion);
+
+        const user = await createUser();
+        const login = { email: user.email, password: user.password };
+        
+        const resultLogin = await agent.post("/signin").send(login);
+
+        const result = await agent.post("/promotion").set(
+            {
+                'Authorization': `Bearer ${resultLogin.body.token}`
+            }
+        ).send(promotion);
         const status = result.status;
 
         expect(status).toEqual(404);
@@ -149,16 +183,18 @@ describe("Business", () => {
 })
 
 describe("Cards", () => {
-    // it("should answer with status 200 when a add Points", async () => {
+    it("should answer with status 200 when a add Points", async () => {
 
-    //     const user = await createUser();
-    //     const business = {
-    //         name: "test",
-    //         userId: user.id
-    //     }
-    //     const result = await agent.post("/business").send(business);
-    //     const status = result.status;
+        const promotion: any = await createPromotion();
 
-    //     expect(status).toEqual(201);
-    // })
+        const user = await createUser();
+        
+        const result = await agent.post(`/addPoints/${promotion.id}`).send({
+            code: user.code
+        });
+
+        const status = result.status;
+
+        expect(status).toEqual(200);
+    })
 })
